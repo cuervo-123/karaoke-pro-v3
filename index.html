@@ -92,8 +92,13 @@
         <div class="card">
           <h3>🔎 Buscar en YouTube</h3>
           <div class="row wrap">
-            <input type="text" id="ytQuery" placeholder="Artista - Tema (solo audio de YouTube)" />
+            <input type="text" id="ytQuery" placeholder="Artista - Tema o link de YouTube" />
             <button id="buscarYT">Buscar</button>
+          </div>
+          <div class="row wrap mt8">
+            <input type="password" id="ytApiKeyInput" placeholder="YouTube API Key para buscar por nombres" style="min-width:320px;flex:1" />
+            <button id="btnGuardarYTKey">Guardar Key</button>
+            <span class="pill" id="ytStatus">YouTube listo</span>
           </div>
 
           <div class="jsonKaraokeBox mt8">
