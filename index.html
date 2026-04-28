@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Blue • M3U Builder + Karaoke Pro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="tb-header">
+    <h1>Tech Blue • M3U Builder 🎛️ + Karaoke 🎤</h1>
+    <nav class="tb-actions">
+      <button id="btnTabBuilder" class="active">M3U Builder</button>
+      <button id="btnTabKaraoke">Karaoke</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ======== M3U BUILDER ======== -->
+    <section id="tabBuilder" class="tab active">
+      <div class="card">
+        <h2>📺 Cargar listas</h2>
+        <div class="row wrap">
+          <input type="file" id="fileInput" accept=".m3u,.m3u8,.json" />
+          <button id="exportAll">📤 Exportar todo (.json)</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>🎯 Filtros</h3>
+          <div class="row wrap">
+            <label class="label">Categoría</label>
+            <select id="filtroCategoria"></select>
+            <input type="text" id="buscador" placeholder="🔍 Buscar canal..." />
+          </div>
+
+          <h3>📜 Canales</h3>
+          <select id="canalDropdown" size="12" class="fill"></select>
+
+          <div class="row wrap mt8">
+            <button id="btnVerificar">▶️ Verificar canal</button>
+            <span class="hint">Atajos: ↑/↓ navegar, Enter verificar</span>
+          </div>
+
+          <div id="player" class="player"></div>
+        </div>
+
+        <div class="card">
+          <h3>📁 Listas personalizadas</h3>
+          <div class="row wrap">
+            <input type="text" id="nombreLista" placeholder="Nombre de la lista" />
+            <button id="btnCrearLista">Crear</button>
+          </div>
+
+          <div class="row wrap">
+            <label class="label">Agregar canal actual a:</label>
+            <select id="playerListSelect"></select>
+            <button id="btnAgregarALista">➕ Agregar</button>
+          </div>
+
+          <div class="row wrap">
+            <label class="label">Categoría del canal:</label>
+            <select id="categoriaPlayerSelect"></select>
+            <button id="btnGuardarCategoria">Guardar categoría</button>
+          </div>
+
+          <div class="row wrap mt8">
+            <button id="btnExpandirTodo">Expandir todo</button>
+            <button id="btnColapsarTodo">Colapsar todo</button>
+          </div>
+
+          <div id="listas"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== KARAOKE ======== -->
+    <section id="tabKaraoke" class="tab">
+      <div class="card">
+        <div class="karaoke-header">
+          <h2>🎤 Karaoke Manager</h2>
+          <div class="row wrap">
+            <span class="label">Color Neon</span>
+            <div id="colorPicker" class="colorPicker"></div>
+          </div>
+        </div>
+        <p class="hint">Busca canciones, añádelas a participantes y arma una cola de turnos. El escenario Tech Blue se ilumina en modo Neon solo cuando hay música reproduciéndose.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>🔎 Buscar en YouTube</h3>
+          <div class="row wrap">
+            <input type="text" id="ytQuery" placeholder="Artista - Tema (solo audio de YouTube)" />
+            <button id="buscarYT">Buscar</button>
+          </div>
+
+          <div class="jsonKaraokeBox mt8">
+            <div class="row wrap">
+              <label class="label">📥 JSON de temas favoritos</label>
+              <input type="file" id="karaokeJsonInput" accept=".json,application/json" />
+              <button id="btnMarcarTemas">✅ Marcar todos</button>
+              <button id="btnDesmarcarTemas">⬜ Desmarcar</button>
+              <button id="btnGenerarTemasYT">🎬 Crear tarjetas seleccionadas</button>
+              <span class="pill" id="karaokeJsonCount">0 temas</span>
+            </div>
+            <p class="hint">Formato: ["Marc Anthony Vivir Mi Vida", "Grupo Niche Cali Pachanguero"] o [{"title":"Tema","artist":"Artista"}]. También acepta links de YouTube.</p>
+            <div id="karaokeJsonList" class="karaokeJsonList"></div>
+          </div>
+
+          <div id="ytResults" class="ytResults"></div>
+        </div>
+
+        <div class="card">
+          <h3>👥 Participantes</h3>
+          <div class="row wrap">
+            <input type="text" id="nuevoParticipante" placeholder="Nombre del participante" />
+            <button id="btnAgregarParticipante">➕ Agregar</button>
+            <button id="btnExportSesionJSON">📤 Exportar sesión (JSON)</button>
+            <button id="btnExportSesionM3U">📤 Exportar sesión (M3U)</button>
+          </div>
+          <div id="participantes"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>▶️ Reproductor</h3>
+          <div id="ytPlayer" class="ytPlayer"></div>
+          <div class="row wrap mt8">
+            <button id="btnPlay">Play</button>
+            <button id="btnPause">Pause</button>
+            <button id="btnNext">⏭️ Siguiente en cola</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>🔁 Cola de turnos</h3>
+          <div class="row wrap">
+            <button id="btnGenerarCola">🔄 Generar (round-robin)</button>
+            <button id="btnPrev">⏮️ Anterior</button>
+            <button id="btnNext2">⏭️ Siguiente</button>
+            <span class="pill" id="turnosLen">0 en cola</span>
+          </div>
+          <div class="mt8">
+            <div id="nowPlaying" class="strong">Ahora canta: —</div>
+            <div id="nextUp" class="hint">Siguiente: —</div>
+          </div>
+        </div>
+      </div>
+
+      <canvas id="visualizer" class="visualizer"></canvas>
+      <div id="neonLabel" class="neonLabel">🎶 Neon Stage Active</div>
+    </section>
+  </main>
+
+  <footer class="tb-footer">Tech Blue • Cuervo‑Inc</footer>
+
+  <!-- Libs -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
+</body>
+</html>
